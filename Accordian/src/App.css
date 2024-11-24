@@ -1,0 +1,25 @@
+.accordian{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.question{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: gray;
+}
+h2{
+  color: aqua;
+}
+h3{
+  color: crimson;
+}
+button{
+  color: brown;
+  font-size: larger;
+  font-weight: bold;
+}
