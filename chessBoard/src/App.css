@@ -1,0 +1,34 @@
+.chess-board {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  height: 320px;
+}
+
+.row {
+  display: flex;
+  flex: 1;
+}
+
+.cell {
+  flex: 1;
+  aspect-ratio: 1;
+  border: 1px solid #000;
+  cursor: pointer;
+}
+
+.cell.black {
+  background-color: black;
+}
+
+.cell.white {
+  background-color: white;
+}
+
+.cell.highlighted {
+  background-color: rgb(181, 48, 48);
+}
+
+.cell.clicked {
+  background-color: rgb(128, 0, 0);
+}
