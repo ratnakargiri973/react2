@@ -1,134 +1,125 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react';
+import './App.css';
 
-const App = () => {
-  const [gridSize, setGridSize] = useState(3); // Default grid size 3x3
-  const [lights, setLights] = useState([]);
-  const [activationOrder, setActivationOrder] = useState([]); // Track activation order
-  const [allOn, setAllOn] = useState(false); // Flag to toggle reverse mode
-  const [delay, setDelay] = useState(300); // Delay between toggling lights (in ms)
+function Cell({ filled, onClick, isDisabled, label }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={isDisabled}
+      aria-label={label}
+      className={filled ? 'cell cell-activated' : 'cell'}
+    ></button>
+  );
+}
 
-  // Initialize the grid
-  useEffect(() => {
-    const initialGrid = Array(gridSize)
-      .fill(null)
-      .map(() => Array(gridSize).fill(false));
-    setLights(initialGrid);
-    setActivationOrder([]);
-    setAllOn(false); // Reset state when grid size changes
-  }, [gridSize]);
+function App() {
+  const [order, setOrder] = useState([]);
+  const [isDeactivating, setIsDeactivating] = useState(false);
+  const [config, setConfig] = useState([
+    [1, 1, 1],
+    [1, 1, 1],
+    [1, 1, 1],
+  ]);
+  const [delay, setDelay] = useState(300);
+  const [size, setsize] = useState(3);
 
-  // Handle cell click
-  const handleCellClick = (rowIndex, colIndex) => {
-    setLights((prevLights) => {
-      const updatedLights = prevLights.map((row, r) =>
-        row.map((cell, c) =>
-          r === rowIndex && c === colIndex ? !cell : cell
-        )
-      );
+  function deactivateCells() {
+    setIsDeactivating(true);
 
-      // Update activation order
-      if (!updatedLights[rowIndex][colIndex]) {
-        // Remove from activation order if toggled off
-        setActivationOrder((prevOrder) =>
-          prevOrder.filter(([r, c]) => !(r === rowIndex && c === colIndex))
-        );
-      } else {
-        // Add to activation order if toggled on
-        setActivationOrder((prevOrder) => [...prevOrder, [rowIndex, colIndex]]);
-      }
+    const timer = setInterval(() => {
+      setOrder((originalOrder) => {
+        const newOrder = originalOrder.slice();
+        newOrder.pop();
 
-      // Check if all lights are on
-      const allLightsOn = updatedLights.every((row) => row.every((cell) => cell));
-      if (allLightsOn) {
-        setAllOn(true);
-      }
-
-      return updatedLights;
-    });
-  };
-
-  // Reverse toggle logic
-  useEffect(() => {
-    if (allOn) {
-      const orderToProcess = [...activationOrder]; // Preserve the original order
-      let toggleDelay = 0;
-
-      // Prevent immediate re-triggering
-      setAllOn(false);
-
-      // Toggle lights off in reverse order
-      orderToProcess.reverse().forEach(([rowIndex, colIndex], idx) => {
-        setTimeout(() => {
-          setLights((prevLights) => {
-            const updatedLights = prevLights.map((row, r) =>
-              row.map((cell, c) =>
-                r === rowIndex && c === colIndex ? false : cell // Ensure light is turned off
-              )
-            );
-            return updatedLights;
-          });
-
-          // Reset activationOrder only after the last light is toggled off
-          if (idx === orderToProcess.length - 1) {
-            setActivationOrder([]);
-          }
-        }, toggleDelay);
-        toggleDelay += delay; // Increment delay based on user input
+        if (newOrder.length === 0) {
+          clearInterval(timer);
+          setIsDeactivating(false);
+        }
+        return newOrder;
       });
+    }, delay);
+  }
+
+  function activateCells(index) {
+    const newOrder = [...order, index];
+    setOrder(newOrder);
+
+    if (newOrder.length === config.flat().filter(Boolean).length) {
+      deactivateCells();
     }
-  }, [allOn, delay]);
+  }
+
+
+  useEffect(()=>{
+    updateConfig(size)
+  }, [size]);
+ 
+  function updateConfig(size) {
+    const newSize = parseInt(size, 10);
+    const newConfig = [];
+
+    for (let i = 0; i < newSize; i++) {
+     const row = [];
+     for (let j = 0; j < newSize; j++) {
+    row.push(1);
+    }
+    newConfig.push(row);
+  }
+    setConfig(newConfig);
+    setOrder([]);
+  }
+
+
+  function handleDelayChange(value) {
+    const numericValue = parseInt(value, 10);
+    setDelay(numericValue);
+  }
 
   return (
-    <div className="grid-lights">
-      {/* Grid */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
-          gap: "10px",
-        }}
-      >
-        {lights.map((row, rowIndex) =>
-          row.map((light, colIndex) => (
-            <div
-              key={`${rowIndex}-${colIndex}`}
-              onClick={() => handleCellClick(rowIndex, colIndex)}
-              style={{
-                width: "50px",
-                height: "50px",
-                backgroundColor: light ? "yellow" : "gray",
-                border: "1px solid black",
-                cursor: "pointer",
-              }}
-            ></div>
-          ))
-        )}
+    <div className="wrapper">
+      <div className="grid" style={{ gridTemplateColumns: `repeat(${config[0].length}, 1fr)` }}>
+        {config.flat().map((value, index) => {
+          return value ? (
+            <Cell
+              key={index}
+              filled={order.includes(index)}
+              label={`cell ${index}`}
+              onClick={() => activateCells(index)}
+              isDisabled={order.includes(index)}
+            />
+          ) : (
+            <span key={index} />
+          );
+        })}
       </div>
-
-      {/* Controls */}
-      <div style={{ marginTop: "20px" }}>
+      <div className="controls">
         <label>
-          Grid Size:{" "}
+          Grid Size:
           <input
-            type="number"
-            value={gridSize}
-            onChange={(e) => setGridSize(Math.max(1, Number(e.target.value)))}
-            min="1"
+            type="range"
+            min="2"
+            max="4"
+            step="1"
+            value={size}
+            onChange={(e) => setsize(e.target.value)}
           />
         </label>
-        <br />
-        <label style={{ marginTop: "10px" }}>
-          Delay (ms):{" "}
+        <label>
+          Delay:
           <input
-            type="number"
+            type="range"
+            min="100"
+            max="700"
+            step="100"
             value={delay}
-            onChange={(e) => setDelay(Math.max(0, Number(e.target.value)))}
-            min="0"
+            onChange={(e) => handleDelayChange(e.target.value)}
           />
         </label>
+        <span>Delay: {delay}ms</span>
       </div>
     </div>
   );
-};
+}
 
 export default App;

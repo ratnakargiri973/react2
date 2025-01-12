@@ -1,0 +1,69 @@
+.wrapper{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+.inputs {
+  margin-bottom: 20px;
+}
+
+label {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+input[type="range"] {
+  width: 200px;
+}
+
+table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+/* Styling for table cells */
+table td {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 18px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for table cells */
+table td:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Odd column style */
+table td:nth-child(odd) {
+  background-color: #e0f7fa;
+}
+
+/* Even column style */
+table td:nth-child(even) {
+  background-color: #ffe0b2;
+}
+
+/* For table container */
+.table-container {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+/* Styling for the active input value */
+.inputs span {
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+}
