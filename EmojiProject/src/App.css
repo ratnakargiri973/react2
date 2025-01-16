@@ -1,0 +1,66 @@
+/* App.css */
+.container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.controls {
+  margin-bottom: 20px;
+}
+
+.controls select,
+.controls input {
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.emoji-box {
+  max-height: 400px; /* Set a max height */
+  overflow-y: scroll; /* Enable vertical scrolling */
+  border: 1px solid #ccc; /* Add a border for the box */
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.emoji-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap; /* Arrange emojis in a grid */
+  gap: 10px;
+}
+
+.emoji-list li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.emoji-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.emoji-character {
+  font-size: 36px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.emoji-name {
+  font-size: 14px;
+  color: #555;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

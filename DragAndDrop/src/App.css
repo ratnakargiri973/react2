@@ -1,0 +1,68 @@
+
+.container {
+  padding: 20px;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.container h3 {
+  text-align: center;
+  color: #333;
+}
+
+.draggable-item {
+  padding: 10px;
+  width: 10rem;
+  text-align: center;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: grab;
+  transition: background-color 0.2s ease;
+}
+
+.draggable-item:active {
+  cursor: grabbing;
+  background-color: #e0e0e0;
+}
+
+.save-button {
+  display: block;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+  background-color: #45a049;
+}
+
+.save-button:active {
+  background-color: #3e8e41;
+}
+
+
+@media (max-width: 500px) {
+  .container {
+    padding: 10px;
+  }
+
+  .save-button {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
