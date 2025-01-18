@@ -1,25 +1,60 @@
-.accordian{
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+/* Accordion Container */
+.accordion {
+  margin: 10px auto;
+  max-width: 600px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Question Section */
+.question {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 2rem;
+  justify-content: space-between;
+  padding: 15px;
+  cursor: pointer;
+  background-color: #2c7397;
+  border-bottom: 1px solid #ddd;
 }
-.question{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  background-color: gray;
+
+.question h2 {
+  margin: 0;
+  font-size: 18px;
+  flex: 1;
+  text-align: left;
 }
-h2{
-  color: aqua;
+
+.question button {
+  border: none;
+  background-color: transparent;
+  font-size: 30px;
+  color: #333;
+  cursor: pointer;
+  padding: 0 10px;
+  
 }
-h3{
-  color: crimson;
+
+.question button:hover {
+  color: #869b1c;
 }
-button{
-  color: brown;
-  font-size: larger;
-  font-weight: bold;
+
+/* Answer Section */
+h3 {
+  margin: 0;
+  padding: 15px;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+  background-color: rgb(85, 189, 154);
 }
